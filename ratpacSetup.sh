@@ -10,7 +10,7 @@ exec > >(tee -i install.log)
 exec 2>&1
 
 function install(){
-  gitdir="git@github.com:oggroup/ratpac-two.git"
+  gitdir="git@github.com:gmwendel/ratpac-two.git"
   help $@
   procuse=$(getnproc $@)
   # End testing
@@ -225,7 +225,8 @@ function install(){
     tar xzvf cry.tar.gz
     cd cry_v1.7
     # Lets hack things up a bit to get a shared library
-    sed -i 's/$//' src/Makefile
+    sed -i 's/
+$//' src/Makefile
     sed -i '25 i \\t$(CXX) -shared $(OBJ) -o ../lib/libCRY.so' src/Makefile
     sed -i 's/\-Wall/\-Wall \-fPIC/g' src/Makefile
     make -j1 # Race condition using multiple threads
