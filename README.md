@@ -6,6 +6,7 @@ Stolen and modified from https://github.com/MorganAskins/ratpacSetup
 sudo apt-get -y install build-essential openssl libssl-dev libssl1.0 libgl1-mesa-dev libqt5x11extras5 qtbase5-dev qtdeclarative5-dev libqt5-dev libxpm-dev libxft-dev libxerces-c-dev
 git clone git@github.com:gmwendel/ratpac-setup.git
 cd ratpac-setup
+chmod +x ratpacSetup.sh
 ./ratpacSetup.sh -j10
 ```
 
