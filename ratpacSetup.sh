@@ -18,7 +18,7 @@ function install(){
   export CXX=$(command -v g++)
 
   # Versioning
-  root_branch="v6-28-00-patches"
+  root_branch="v6-26-00-patches"
   
   # Check requirements; Git && GCC
   if ! [ -x "$(command -v gcc)" ]; then
