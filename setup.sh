@@ -21,6 +21,7 @@ function install(){
     root_branch="v6-28-00-patches"
     geant_branch="v11.1.2"
     ratpac_repository="https://github.com/rat-pac/ratpac-two.git"
+    ratpac_branch="main"
 
     help $@
     procuse=$(getnproc $@)
@@ -101,12 +102,16 @@ function install(){
         then
             enable_mac=true
         fi
+        if [[ $element == --ratpac-branch=* ]]
+        then
+            ratpac_branch="${element#--ratpac-branch=}"
+        fi
     done
 
     # global options dictionary
     declare -A options=(["procuse"]=$procuse ["prefix"]=$prefix ["root_branch"]=$root_branch \
         ["geant_branch"]=$geant_branch ["enable_gpu"]=$enable_gpu ["enable_mac"]=$enable_mac \
-        ["ratpac_repository"]=$ratpac_repository ["cleanup"]=$cleanup)
+        ["ratpac_repository"]=$ratpac_repository ["ratpac_branch"]=$ratpac_branch ["cleanup"]=$cleanup)
 
     if [ "${install_selection[cmake]}" = true ]
     then
@@ -176,7 +181,8 @@ function help()
         ["skip"]="Skip the following packages" \
         ["gpu"]="Enable GPU support for tensorflow" \
         ["mac"]="Enable Mac support for tensorflow" \
-        ["noclean"]="Do not clean up after install")
+        ["noclean"]="Do not clean up after install" \
+        ["ratpac-branch=<name>"]="Use specified branch when cloning ratpac")
     for element in $@
     do
         if [[ $element =~ "-h" ]];
@@ -438,7 +444,8 @@ function install_ratpac()
         export CRYDATA=${options[prefix]}/data/cry
     fi
     rm -rf ratpac
-    git clone ${options[ratpac_repository]} ratpac
+    git clone --single-branch --branch ${options[ratpac_branch]} \
+        ${options[ratpac_repository]} ratpac
     cd ratpac
     make -j${options[procuse]} && source ./ratpac.sh
     # Check if ratpac was successful, if so clean-up, otherwise exit

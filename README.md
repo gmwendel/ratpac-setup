@@ -45,6 +45,8 @@ Additional options are available, including passing make commands
 ./setup.sh --only tensorflow --mac
 # Pass number of processors to make, and even keep downloaded files for debugging
 ./setup.sh -j8 --noclean
+# Specify a ratpac branch when cloning
+./setup.sh --ratpac-branch=dev-branch
 # For complete information run
 ./setup.sh -h
 ```
